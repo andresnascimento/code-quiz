@@ -3,10 +3,12 @@ import 'package:http/http.dart' as http;
 
 import '../models/question_model.dart';
 
+//TODO add check anwser logic
+
 class Questions with ChangeNotifier {
   List<Question> _questions;
   String _categorySelected;
-  // int _questionsLimit;
+  var isDone = false;
 
   int _currentQuestionIndex = 0;
 
@@ -23,13 +25,15 @@ class Questions with ChangeNotifier {
   }
 
   void nextQuestion() {
-    _currentQuestionIndex++;
-    notifyListeners();
+    if (_currentQuestionIndex >= (_questions.length - 1)) {
+      isDone = true;
+      notifyListeners();
+      print('finished');
+    } else {
+      _currentQuestionIndex++;
+      notifyListeners();
+    }
   }
-
-  // int getAnswersLength() {
-  //   return _questions[currentQuestionIndex].answers.toJson().length;
-  // }
 
   void selectCategory(String category) {
     _categorySelected = category;

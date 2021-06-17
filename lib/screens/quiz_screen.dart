@@ -29,20 +29,31 @@ class QuizScreen extends StatelessWidget {
               itemCount: currentAnwserList.length,
               itemBuilder: (context, index) {
                 String key = currentAnwserList.keys.elementAt(index);
-                return TextButton(
-                  onPressed: () {},
-                  child: Text('${currentAnwserList[key]}'),
-                  //TODO check if the answer is null and remove it from the list
-                );
+                if (currentAnwserList[key] != null) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      child: Text('${currentAnwserList[key]}'),
+                    ),
+                  );
+                } else {
+                  return null;
+                }
               },
             ),
-            ElevatedButton(
-              onPressed: () {
-                questionsData.nextQuestion();
-                //TODO check if is finished
-              },
-              child: Text('Next Question'),
-            )
+            questionsData.isDone
+                ? ElevatedButton(
+                    onPressed: () {
+                      // questionsData.nextQuestion();
+                    },
+                    child: Text('Finish'),
+                  )
+                : ElevatedButton(
+                    onPressed: () {
+                      questionsData.nextQuestion();
+                    },
+                    child: Text('Next Question'),
+                  )
           ],
         ),
       ),
