@@ -7,10 +7,14 @@ import '../models/question_model.dart';
 
 class Questions with ChangeNotifier {
   List<Question> _questions;
+
   String _categorySelected;
+
   var isDone = false;
 
   int _currentQuestionIndex = 0;
+
+  String _selectedAnswer;
 
   List<Question> get questions {
     return [..._questions];
@@ -32,6 +36,24 @@ class Questions with ChangeNotifier {
     } else {
       _currentQuestionIndex++;
       notifyListeners();
+    }
+    print(_questions[_currentQuestionIndex].correctAnswer);
+    print(_questions[_currentQuestionIndex].multipleCorrectAnswers);
+  }
+
+  void setSelectedAnswer(String selectedAnswer) {
+    _selectedAnswer = selectedAnswer;
+    print(_selectedAnswer);
+    notifyListeners();
+  }
+
+  bool checkAnswer() {
+    if (_selectedAnswer == _questions[_currentQuestionIndex].correctAnswer) {
+      print('true');
+      return true;
+    } else {
+      print('false');
+      return false;
     }
   }
 

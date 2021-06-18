@@ -31,7 +31,9 @@ class QuizScreen extends StatelessWidget {
                 String key = currentAnwserList.keys.elementAt(index);
                 if (currentAnwserList[key] != null) {
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      questionsData.setSelectedAnswer(key);
+                    },
                     child: Container(
                       child: Text('${currentAnwserList[key]}'),
                     ),
@@ -41,19 +43,18 @@ class QuizScreen extends StatelessWidget {
                 }
               },
             ),
-            questionsData.isDone
-                ? ElevatedButton(
-                    onPressed: () {
-                      // questionsData.nextQuestion();
-                    },
-                    child: Text('Finish'),
-                  )
-                : ElevatedButton(
-                    onPressed: () {
-                      questionsData.nextQuestion();
-                    },
-                    child: Text('Next Question'),
-                  )
+            ElevatedButton(
+              onPressed: () {
+                questionsData.checkAnswer();
+              },
+              child: Text('Check Answer!'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                questionsData.nextQuestion();
+              },
+              child: Text('Next Question'),
+            ),
           ],
         ),
       ),
