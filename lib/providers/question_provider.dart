@@ -72,8 +72,6 @@ class Questions with ChangeNotifier {
       if (response.statusCode == 200) {
         _questions = quizFromJson(response.body);
         notifyListeners();
-
-        // print(_questions[currentQuestionIndex].answers.toJson());
       } else {
         print(response.statusCode);
       }
