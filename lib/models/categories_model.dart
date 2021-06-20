@@ -1,12 +1,12 @@
 class Category {
   List _categoriesList = [
-    'BASH',
-    'DevOps',
+    // 'BASH',
+    // 'DevOps',
     'Docker',
     'HTML',
     'JavaScript',
     'Kubernets',
-    'Laravel',
+    // 'Laravel',
     'Linux',
     'MySQL',
     'PHP',
