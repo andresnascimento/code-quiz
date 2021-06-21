@@ -1,9 +1,11 @@
-import 'package:coding_quiz/screens/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/categories_model.dart';
 import '../providers/question_provider.dart';
+import '../widgets/category_list_widget.dart';
+import '../widgets/home_title_widget.dart';
+import '../models/app_constants.dart';
+import '../models/categories_model.dart';
 
 class HomePage extends StatelessWidget {
   static String id = 'home_screen';
@@ -14,22 +16,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final questionsData = Provider.of<Questions>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Quiz'),
-      ),
-      body: Center(
-          child: ListView.builder(
-        itemCount: category.categoiesList.length,
-        itemBuilder: (context, index) {
-          return ElevatedButton(
-            onPressed: () async {
-              questionsData.selectCategory(categoryList[index]);
-              await questionsData.fetchQuestions();
-              Navigator.of(context).pushNamed(QuizScreen.id);
-            },
-            child: Text('${categoryList[index]}'),
-          );
-        },
+      backgroundColor: kColorBlack,
+      body: SingleChildScrollView(
+          child: Stack(
+        children: <Widget>[
+          // TODO fix the stack
+          HomeScreenTitle(),
+          CategoryList(),
+        ],
       )),
     );
   }
