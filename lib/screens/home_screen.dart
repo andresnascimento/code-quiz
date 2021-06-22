@@ -17,14 +17,34 @@ class HomePage extends StatelessWidget {
     final questionsData = Provider.of<Questions>(context);
     return Scaffold(
       backgroundColor: kColorBlack,
-      body: SingleChildScrollView(
-          child: Stack(
-        children: <Widget>[
-          // TODO fix the stack
-          HomeScreenTitle(),
-          CategoryList(),
-        ],
-      )),
+      body: Container(
+        color: Colors.black,
+        height: double.infinity,
+        child: Stack(
+          // fit: StackFit.expand,
+          children: <Widget>[
+            Container(
+              child: HomeScreenTitle(),
+              // height: 300,
+            ),
+            Positioned(
+              top: 220,
+              child: Column(
+                // TODO fix the scrooll
+                children: [
+                  CategoryList(),
+                  CategoryList(),
+                  CategoryList(),
+                  CategoryList(),
+                  CategoryList(),
+                  CategoryList(),
+                  CategoryList(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -9,6 +9,7 @@ class HomeScreenTitle extends StatelessWidget {
     return ClipPath(
       clipper: ClippingClass(),
       child: Container(
+        height: 320,
         child: Container(
           padding: EdgeInsets.fromLTRB(24, 56, 24, 80),
           decoration: BoxDecoration(
@@ -79,7 +80,7 @@ class HomeScreenTitle extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 32, 0, 60),
+                padding: EdgeInsets.fromLTRB(0, 32, 0, 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(100.0),
