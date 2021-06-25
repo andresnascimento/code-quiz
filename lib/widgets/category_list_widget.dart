@@ -9,6 +9,7 @@ class CategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     double widthContainer = MediaQuery.of(context).size.width - 48;
     return Container(
+      height: 130,
       clipBehavior: Clip.hardEdge,
       width: widthContainer,
       // padding: EdgeInsets.all(20),
