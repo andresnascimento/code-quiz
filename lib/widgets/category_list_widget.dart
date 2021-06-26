@@ -13,7 +13,7 @@ class CategoryList extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       width: widthContainer,
       // padding: EdgeInsets.all(20),
-      margin: EdgeInsets.all(24),
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 16.0),
       decoration: BoxDecoration(
         color: Color.fromRGBO(243, 112, 62, 1),
         borderRadius: BorderRadius.only(

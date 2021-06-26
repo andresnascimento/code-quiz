@@ -9,76 +9,14 @@ class HomeScreenTitle extends StatelessWidget {
     return ClipPath(
       clipper: ClippingClass(),
       child: Container(
-        height: 320,
+        height: 380,
         child: Container(
-          padding: EdgeInsets.fromLTRB(24, 56, 24, 80),
+          padding: EdgeInsets.fromLTRB(24, 100, 24, 80),
           decoration: BoxDecoration(
             color: kColorPrimary,
           ),
           child: Column(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 4.0,
-                                color: kColorPrimaryDark,
-                              ),
-                              borderRadius: BorderRadius.circular(12.0),
-                              image: DecorationImage(
-                                fit: BoxFit.fitHeight,
-                                image:
-                                    ExactAssetImage('assets/images/avatar.png'),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            'Esther Howard',
-                            style: GoogleFonts.mulish(textStyle: kTextBody),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(8, 2, 24, 2),
-                    decoration: BoxDecoration(
-                      color: kColorPrimaryDark,
-                      borderRadius: BorderRadius.circular(60.0),
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image:
-                                  ExactAssetImage('assets/images/trophy.png'),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          '93.4',
-                          style: GoogleFonts.mulish(
-                              textStyle: kTextBody.copyWith(
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
               Container(
                 padding: EdgeInsets.fromLTRB(0, 32, 0, 10),
                 decoration: BoxDecoration(
@@ -111,22 +49,6 @@ class HomeScreenTitle extends StatelessWidget {
     );
   }
 }
-
-// Center(
-//     child: ListView.builder(
-//   itemCount: category.categoiesList.length,
-//   itemBuilder: (context, index) {
-//     return
-//     ElevatedButton(
-//       onPressed: () async {
-//         questionsData.selectCategory(categoryList[index]);
-//         await questionsData.fetchQuestions();
-//         Navigator.of(context).pushNamed(QuizScreen.id);
-//       },
-//       child: Text('${categoryList[index]}'),
-//     );
-//   },
-// )),
 
 class ClippingClass extends CustomClipper<Path> {
   @override
