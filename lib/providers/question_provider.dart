@@ -7,6 +7,7 @@ import '../models/question_model.dart';
 
 class Questions with ChangeNotifier {
   List<Question> _questions;
+  var isDone = false;
 
   String _categorySelected;
   int _currentQuestionIndex = 0;
