@@ -3,11 +3,15 @@ import 'package:http/http.dart' as http;
 
 import '../models/question_model.dart';
 
+//TODO add check anwser logic
+
 class Questions with ChangeNotifier {
   List<Question> _questions;
-  String _categorySelected;
 
+  String _categorySelected;
   int _currentQuestionIndex = 0;
+
+  String _selectedAnswer;
 
   List<Question> get questions {
     return [..._questions];
@@ -22,13 +26,33 @@ class Questions with ChangeNotifier {
   }
 
   void nextQuestion() {
-    _currentQuestionIndex++;
+    if (_currentQuestionIndex >= (_questions.length - 1)) {
+      isDone = true;
+      notifyListeners();
+      print('finished');
+    } else {
+      _currentQuestionIndex++;
+      notifyListeners();
+    }
+    print(_questions[_currentQuestionIndex].correctAnswer);
+    print(_questions[_currentQuestionIndex].multipleCorrectAnswers);
+  }
+
+  void setSelectedAnswer(String selectedAnswer) {
+    _selectedAnswer = selectedAnswer;
+    print(_selectedAnswer);
     notifyListeners();
   }
 
-  // int getAnswersLength() {
-  //   return _questions[currentQuestionIndex].answers.toJson().length;
-  // }
+  bool checkAnswer() {
+    if (_selectedAnswer == _questions[_currentQuestionIndex].correctAnswer) {
+      print('true');
+      return true;
+    } else {
+      print('false');
+      return false;
+    }
+  }
 
   void selectCategory(String category) {
     _categorySelected = category;
