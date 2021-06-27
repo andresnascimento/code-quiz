@@ -31,6 +31,7 @@ class HomeScreenTitle extends StatelessWidget {
                       'Let\'s play!',
                       style: GoogleFonts.quicksand(textStyle: kHeaderLg),
                     ),
+                    SizedBox(height: 8.0),
                     Text(
                       'Choose a category to start playing',
                       style: GoogleFonts.mulish(

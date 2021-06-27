@@ -17,8 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Category category = Category();
-  final categoryList = Category().categoiesList;
+  // final categoryList = Category();
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
@@ -38,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final questionsData = Provider.of<Questions>(context);
+    final category = Category();
     return Scaffold(
       backgroundColor: kColorBlack,
       body: Container(
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: ListView.builder(
                       controller: controller,
-                      itemCount: 5,
+                      itemCount: category.categoryList.length,
                       itemBuilder: (context, index) {
                         double scale = 1.0;
                         if (topContainer > 0.2) {
@@ -70,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                           child: Transform(
                             transform: Matrix4.identity()..scale(scale, scale),
                             alignment: Alignment.bottomCenter,
-                            child: CategoryList(),
+                            child: category.categoryList[index],
                           ),
                         );
                       },

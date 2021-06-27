@@ -6,7 +6,6 @@ import '../models/question_model.dart';
 class Questions with ChangeNotifier {
   List<Question> _questions;
   String _categorySelected;
-  // int _questionsLimit;
 
   int _currentQuestionIndex = 0;
 
@@ -47,7 +46,7 @@ class Questions with ChangeNotifier {
         _questions = quizFromJson(response.body);
         notifyListeners();
 
-        // print(_questions[currentQuestionIndex].answers.toJson());
+        print(_questions[currentQuestionIndex].answers.toJson());
       } else {
         print(response.statusCode);
       }
