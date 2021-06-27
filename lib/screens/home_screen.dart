@@ -1,36 +1,87 @@
-import 'package:coding_quiz/screens/quiz_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
-import '../models/categories_model.dart';
 import '../providers/question_provider.dart';
+import '../widgets/home_app_bar_widget.dart';
+import '../widgets/category_list_widget.dart';
+import '../widgets/home_title_widget.dart';
+import '../models/app_constants.dart';
+import '../models/categories_model.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static String id = 'home_screen';
-  final Category category = Category();
-  final categoryList = Category().categoiesList;
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  // final categoryList = Category();
+  ScrollController controller = ScrollController();
+  bool closeTopContainer = false;
+  double topContainer = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      double indexValue = controller.offset / 220;
+      setState(() {
+        topContainer = indexValue;
+        closeTopContainer = controller.offset > 50;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final questionsData = Provider.of<Questions>(context);
+    final Size size = MediaQuery.of(context).size;
+    final category = Category();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Quiz'),
+      backgroundColor: kColorBlack,
+      body: Container(
+        height: size.height,
+        child: Stack(
+          children: <Widget>[
+            HomeScreenTitle(),
+            Positioned.fill(
+              top: 200,
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: ListView.builder(
+                      controller: controller,
+                      itemCount: category.categoryList.length,
+                      itemBuilder: (context, index) {
+                        double scale = 1.0;
+                        if (topContainer > 0.2) {
+                          scale = index + 0.5 - topContainer;
+                          if (scale < 0.2) {
+                            scale = 0;
+                          } else if (scale > 1) {
+                            scale = 1;
+                          }
+                        }
+                        return AnimatedOpacity(
+                          duration: const Duration(milliseconds: 250),
+                          opacity: scale,
+                          child: Transform(
+                            transform: Matrix4.identity()..scale(scale, scale),
+                            alignment: Alignment.bottomCenter,
+                            child: category.categoryList[index],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            HomeAppBar(),
+          ],
+        ),
       ),
-      body: Center(
-          child: ListView.builder(
-        itemCount: category.categoiesList.length,
-        itemBuilder: (context, index) {
-          return ElevatedButton(
-            onPressed: () async {
-              questionsData.selectCategory(categoryList[index]);
-              await questionsData.fetchQuestions();
-              Navigator.of(context).pushNamed(QuizScreen.id);
-            },
-            child: Text('${categoryList[index]}'),
-          );
-        },
-      )),
     );
   }
 }

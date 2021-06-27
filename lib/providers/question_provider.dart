@@ -9,9 +9,6 @@ class Questions with ChangeNotifier {
   List<Question> _questions;
 
   String _categorySelected;
-
-  var isDone = false;
-
   int _currentQuestionIndex = 0;
 
   String _selectedAnswer;
@@ -72,6 +69,8 @@ class Questions with ChangeNotifier {
       if (response.statusCode == 200) {
         _questions = quizFromJson(response.body);
         notifyListeners();
+
+        print(_questions[currentQuestionIndex].answers.toJson());
       } else {
         print(response.statusCode);
       }
