@@ -1,4 +1,5 @@
 import 'package:coding_quiz/providers/question_provider.dart';
+import 'package:coding_quiz/screens/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,7 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         questionsData.selectCategory(categoryName);
-        questionsData.fetchQuestions();
+        Navigator.of(context).pushNamed(QuizScreen.id);
       },
       child: Container(
         height: 130,
