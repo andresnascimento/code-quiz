@@ -6,16 +6,42 @@ import '../models/question_model.dart';
 //TODO add check anwser logic
 
 class Questions with ChangeNotifier {
-  List<Question> _questions;
+  List<Question> _questions = [];
   var isDone = false;
 
   String _categorySelected;
+
   int _currentQuestionIndex = 0;
 
   String _selectedAnswer;
 
+  Future<void> fetchQuestions() async {
+    String apiKey = 'rRugdBWczdMjHKjQR0Z8DnqpjmXyn3Q8Vh6H47ja';
+    final url = Uri.parse(
+        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=2&tags=$_categorySelected');
+
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        _questions = quizFromJson(response.body);
+        notifyListeners();
+
+        print(_questions[currentQuestionIndex].answers.toJson());
+      } else {
+        print(response.statusCode);
+      }
+    } catch (error) {
+      throw error;
+      //TODO add the error message on the screen
+    }
+  }
+
   List<Question> get questions {
-    return [..._questions];
+    if (_questions.length > 0) {
+      return [..._questions];
+    } else {
+      return _questions;
+    }
   }
 
   String get categorySelected {
@@ -58,26 +84,5 @@ class Questions with ChangeNotifier {
   void selectCategory(String category) {
     _categorySelected = category;
     notifyListeners();
-  }
-
-  Future<void> fetchQuestions() async {
-    String apiKey = 'rRugdBWczdMjHKjQR0Z8DnqpjmXyn3Q8Vh6H47ja';
-    final url = Uri.parse(
-        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=2&tags=$_categorySelected');
-
-    try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        _questions = quizFromJson(response.body);
-        notifyListeners();
-
-        print(_questions[currentQuestionIndex].answers.toJson());
-      } else {
-        print(response.statusCode);
-      }
-    } catch (error) {
-      throw error;
-      //TODO add the error message on the screen
-    }
   }
 }
