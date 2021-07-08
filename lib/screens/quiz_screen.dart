@@ -1,3 +1,4 @@
+import 'package:coding_quiz/models/question_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,14 +15,14 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   var _isLoading = false;
+  var questions;
+  // var currentQuestion;
 
   @override
   void initState() {
     _isLoading = true;
-
     Provider.of<Questions>(context, listen: false).fetchQuestions().then((_) {
       setState(() {
-        // shows and hides the loading
         _isLoading = false;
       });
     });
@@ -31,14 +32,15 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     final questionsData = Provider.of<Questions>(context);
-    final currentQuestion =
-        questionsData.questions[questionsData.currentQuestionIndex];
+
+    // final currentQuestion =
+    //     questionsData.questions![questionsData.currentQuestionIndex];
 
     // final currentAnwserList = currentQuestion.answers.toJson();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(questionsData.categorySelected),
+        title: Text('${questionsData.categorySelected}'),
       ),
       body: _isLoading
           ? Center(
@@ -47,28 +49,52 @@ class _QuizScreenState extends State<QuizScreen> {
           : SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  // Card(
-                  //   child: Text('${currentQuestion.question}'),
-                  // ),
-                  // ListView.builder(
-                  //   shrinkWrap: true,
-                  //   itemCount: currentAnwserList.length,
-                  //   itemBuilder: (context, index) {
-                  //     String key = currentAnwserList.keys.elementAt(index);
-                  //     return TextButton(
-                  //       onPressed: () {},
-                  //       child: Text('${currentAnwserList[key]}'),
-                  //       //TODO check if the answer is null and remove it from the list
-                  //     );
-                  //   },
-                  // ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     questionsData.nextQuestion();
-                  //     //TODO check if is finished
-                  //   },
-                  //   child: Text('Next Question'),
-                  // )
+                  ElevatedButton(
+                    onPressed: () {
+                      print(questionsData
+                          .questions![questionsData.currentQuestionIndex]
+                          .answers!
+                          .toJson());
+                    },
+                    child: Text('press'),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        '${questionsData.currentQuestionIndex + 1} / ${questionsData.questions!.length}',
+                      ),
+                      Container(
+                        child: Text('20.0'),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    child: Text(
+                        '${questionsData.questions![questionsData.currentQuestionIndex].question}'),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: questionsData
+                        .questions![questionsData.currentQuestionIndex].answers!
+                        .toJson()
+                        .length,
+                    itemBuilder: (context, index) {
+                      var value = questionsData
+                          .questions![questionsData.currentQuestionIndex]
+                          .answers!
+                          .toJson();
+                      String? key = value.values.elementAt(index);
+                      return key != null ? Text('${key}') : Container();
+                    },
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      questionsData.nextQuestion();
+                      //TODO check if is finished
+                    },
+                    child: Text('Next Question'),
+                  )
                 ],
               ),
             ),

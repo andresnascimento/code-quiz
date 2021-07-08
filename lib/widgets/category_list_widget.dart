@@ -17,13 +17,13 @@ class CategoryCard extends StatelessWidget {
   final String imageName;
 
   CategoryCard({
-    this.categoryColor,
-    this.gradientDark,
-    this.gradientLight,
-    this.categoryShadow,
-    this.categoryName,
+    required this.categoryColor,
+    required this.gradientDark,
+    required this.gradientLight,
+    required this.categoryShadow,
+    required this.categoryName,
     this.fontColor = Colors.white,
-    this.imageName,
+    required this.imageName,
   });
 
   @override
@@ -33,6 +33,7 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         questionsData.selectCategory(categoryName);
+        // questionsData.fetchQuestions();
         Navigator.of(context).pushNamed(QuizScreen.id);
       },
       child: Container(

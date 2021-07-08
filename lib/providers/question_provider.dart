@@ -6,14 +6,14 @@ import '../models/question_model.dart';
 //TODO add check anwser logic
 
 class Questions with ChangeNotifier {
-  List<Question> _questions = [];
+  List<Question>? _questions;
   var isDone = false;
 
-  String _categorySelected;
+  String? _categorySelected;
 
   int _currentQuestionIndex = 0;
 
-  String _selectedAnswer;
+  String? _selectedAnswer;
 
   Future<void> fetchQuestions() async {
     String apiKey = 'rRugdBWczdMjHKjQR0Z8DnqpjmXyn3Q8Vh6H47ja';
@@ -26,7 +26,7 @@ class Questions with ChangeNotifier {
         _questions = quizFromJson(response.body);
         notifyListeners();
 
-        print(_questions[currentQuestionIndex].answers.toJson());
+        print(_questions![currentQuestionIndex].answers);
       } else {
         print(response.statusCode);
       }
@@ -36,15 +36,11 @@ class Questions with ChangeNotifier {
     }
   }
 
-  List<Question> get questions {
-    if (_questions.length > 0) {
-      return [..._questions];
-    } else {
-      return _questions;
-    }
+  List<Question>? get questions {
+    if (_questions != null) return [..._questions!];
   }
 
-  String get categorySelected {
+  String? get categorySelected {
     return _categorySelected;
   }
 
@@ -53,7 +49,7 @@ class Questions with ChangeNotifier {
   }
 
   void nextQuestion() {
-    if (_currentQuestionIndex >= (_questions.length - 1)) {
+    if (_currentQuestionIndex >= (_questions!.length - 1)) {
       isDone = true;
       notifyListeners();
       print('finished');
@@ -61,8 +57,8 @@ class Questions with ChangeNotifier {
       _currentQuestionIndex++;
       notifyListeners();
     }
-    print(_questions[_currentQuestionIndex].correctAnswer);
-    print(_questions[_currentQuestionIndex].multipleCorrectAnswers);
+    print(_questions![_currentQuestionIndex].correctAnswer);
+    print(_questions![_currentQuestionIndex].multipleCorrectAnswers);
   }
 
   void setSelectedAnswer(String selectedAnswer) {
@@ -72,7 +68,7 @@ class Questions with ChangeNotifier {
   }
 
   bool checkAnswer() {
-    if (_selectedAnswer == _questions[_currentQuestionIndex].correctAnswer) {
+    if (_selectedAnswer == _questions![_currentQuestionIndex].correctAnswer) {
       print('true');
       return true;
     } else {
