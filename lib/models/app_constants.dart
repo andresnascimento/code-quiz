@@ -22,6 +22,14 @@ const kHeaderLg = TextStyle(
   height: 1.4,
   color: Colors.white,
 );
+
+const kHeaderSm = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.w700,
+  color: Colors.white,
+  height: 1.4,
+);
+
 const kTextBody =
     TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white);
 

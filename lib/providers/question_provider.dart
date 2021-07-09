@@ -63,7 +63,7 @@ class Questions with ChangeNotifier {
 
   void setSelectedAnswer(String selectedAnswer) {
     _selectedAnswer = selectedAnswer;
-    print(_selectedAnswer);
+    // print(_selectedAnswer);
     notifyListeners();
   }
 
