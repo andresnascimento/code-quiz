@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const kColorBlack = Color.fromRGBO(10, 17, 40, 1);
+const kColorGray500 = Color.fromRGBO(24, 31, 83, 1);
 const kColorPrimary = Color.fromRGBO(23, 102, 255, 1);
 const kColorPrimaryDark = Color.fromRGBO(15, 89, 231, 1);
 
@@ -27,6 +28,13 @@ const kHeaderSm = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.w700,
   color: Colors.white,
+  height: 1.4,
+);
+
+const kHeaderXs = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+  color: kColorBlack,
   height: 1.4,
 );
 

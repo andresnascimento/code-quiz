@@ -11,42 +11,71 @@ class StatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        Text(
-          '${questionsData.currentQuestionIndex + 1} / ${questionsData.questions!.length}',
-          style: GoogleFonts.quicksand(textStyle: kHeaderSm),
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(8, 2, 24, 2),
-          decoration: BoxDecoration(
-            color: kColorPrimaryDark,
-            borderRadius: BorderRadius.circular(60.0),
-          ),
-          child: Row(
+    final questionsListLength = questionsData.questions!.length;
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 32, horizontal: 20),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: ExactAssetImage('assets/images/trophy.png'),
-                  ),
-                ),
-              ),
-              SizedBox(width: 8),
               Text(
-                '93.4',
-                style: GoogleFonts.mulish(
-                  textStyle: kTextBody.copyWith(fontWeight: FontWeight.bold),
+                '${questionsData.currentQuestionIndex + 1} / $questionsListLength',
+                style: GoogleFonts.quicksand(textStyle: kHeaderSm),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(8, 2, 24, 2),
+                decoration: BoxDecoration(
+                  color: kColorGray500,
+                  borderRadius: BorderRadius.circular(60.0),
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: ExactAssetImage('assets/images/coin.png'),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      '93.4',
+                      style: GoogleFonts.mulish(
+                        textStyle:
+                            kTextBody.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        ),
-      ],
+          SizedBox(width: 16),
+          Container(
+            padding: EdgeInsets.only(top: 20),
+            height: 24,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: questionsListLength,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Container(
+                  //TODO add the progress logic
+                  height: 4,
+                  margin: EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+                  width: (MediaQuery.of(context).size.width - 40) /
+                      questionsListLength,
+                  color: Colors.white.withAlpha(32),
+                );
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }
