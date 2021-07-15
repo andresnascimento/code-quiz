@@ -49,11 +49,27 @@ class _QuizScreenState extends State<QuizScreen> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-              child: Column(
+              child: ListView(
+                shrinkWrap: true,
                 children: <Widget>[
                   StatusBar(questionsData: questionsData),
-                  QuestionsCards(questionsData: questionsData),
-                  AnswersList(questionsData: questionsData),
+                  SizedBox(height: 70),
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                      color: kColorPrimary,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16.0),
+                        topRight: Radius.circular(16.0),
+                      ),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        QuestionsCards(questionsData: questionsData),
+                        AnswersList(questionsData: questionsData),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

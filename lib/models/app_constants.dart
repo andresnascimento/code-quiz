@@ -15,6 +15,10 @@ const kColorOrange = Color.fromRGBO(243, 112, 62, 1);
 const kColorOrangeDark = Color.fromRGBO(222, 92, 43, 0.5);
 const kColorOrangeDarker = Color.fromRGBO(159, 48, 5, 1);
 
+const kColorGold = Color.fromRGBO(250, 163, 48, 1);
+
+const kColorSuccess = Color.fromRGBO(3, 165, 78, 1);
+
 // TYPOGRAPHY
 
 const kHeaderLg = TextStyle(
@@ -22,6 +26,13 @@ const kHeaderLg = TextStyle(
   fontWeight: FontWeight.w700,
   height: 1.4,
   color: Colors.white,
+);
+
+const kHeaderMd = TextStyle(
+  fontSize: 28,
+  fontWeight: FontWeight.w700,
+  color: kColorBlack,
+  height: 1.4,
 );
 
 const kHeaderSm = TextStyle(
