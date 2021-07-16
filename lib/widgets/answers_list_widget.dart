@@ -4,6 +4,7 @@ import 'dart:math';
 
 import '../models/app_constants.dart';
 import '../providers/question_provider.dart';
+import 'correct_answer_content_widget.dart';
 
 class AnswersList extends StatelessWidget {
   const AnswersList({
@@ -11,6 +12,8 @@ class AnswersList extends StatelessWidget {
   });
 
   final Questions questionsData;
+
+  //TODO refactor to improve readability
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +48,13 @@ class AnswersList extends StatelessWidget {
                 ),
                 onTap: () {
                   questionsData.setSelectedAnswer(selectedAnswer);
-                  Random random = new Random();
-                  int randomNumber = random.nextInt(4);
+                  questionsData.checkAnswer();
+
+                  var isLastQuestion = questionsData.currentQuestionIndex >=
+                      (questionsData.questions!.length - 1);
+                  var randomNumber = Random().nextInt(4);
+                  var correcAnswer = questionsData.correctAnswer();
+
                   showModalBottomSheet(
                     backgroundColor: Color.fromARGB(0, 255, 255, 255),
                     // isDismissible: false,
@@ -63,111 +71,45 @@ class AnswersList extends StatelessWidget {
                         ),
                         child: Column(
                           children: <Widget>[
-                            // questionsData.checkAnswer()
-                            //     ? Text('CORRECT!')
-                            //     : Text('WRONG!'),
-                            //TODO extract to widget
-                            // CORRECT:
-                            Column(
-                              children: <Widget>[
-                                Container(
-                                  height: 120.0,
-                                  width: 250.0,
-                                  margin: EdgeInsets.only(bottom: 24.0),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: ExactAssetImage(
-                                          'assets/images/success-$randomNumber.gif'),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
                             Expanded(
-                              flex: 2,
+                              flex: 3,
                               child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 24.0, vertical: 0.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          height: 40.0,
-                                          width: 40.0,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: ExactAssetImage(
-                                                  'assets/images/coin.png'),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 8.0),
-                                        //TODO animate score
-                                        //TODO add score logic
-                                        Text('+ 93.4',
-                                            style: GoogleFonts.quicksand(
-                                              textStyle: kHeaderMd.copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: kColorGold),
-                                            )),
-                                      ],
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(bottom: 24.0),
-                                      child: Text(
-                                        'Right answer!',
-                                        style: GoogleFonts.quicksand(
-                                          textStyle: kHeaderMd,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 4.0,
-                                      width: 40.0,
-                                      color: kColorSuccess,
-                                    ),
-                                    SizedBox(height: 16),
-                                    Text(
-                                      '$key',
-                                      style: GoogleFonts.mulish(
-                                        textStyle: kTextBody.copyWith(
-                                            color: kColorSuccess),
-                                      ),
-                                    ),
-                                  ],
+                                child: CorrectAnswerContent(
+                                  randomNumber: randomNumber,
+                                  questionsData: questionsData,
+                                  correcAnswer: correcAnswer,
                                 ),
                               ),
                             ),
-
-                            //TODO check if it's the last question
                             Expanded(
                               child: Container(
                                 child: GestureDetector(
                                   onTap: () {
-                                    questionsData.nextQuestion();
+                                    if (!isLastQuestion) {
+                                      questionsData.nextQuestion();
+                                    }
+
                                     Navigator.pop(context);
                                   },
                                   child: Container(
-                                    color: kColorPrimary,
+                                    color: isLastQuestion
+                                        ? kColorBlack
+                                        : kColorPrimary,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Next question',
+                                          isLastQuestion
+                                              ? 'Finish'
+                                              : 'Next question',
                                           style: GoogleFonts.mulish(
                                             textStyle: kTextBody,
                                           ),
                                         ),
                                         SizedBox(width: 10.0),
                                         Icon(
-                                          Icons.east,
+                                          isLastQuestion ? null : Icons.east,
                                           color: Colors.white,
                                         )
                                       ],

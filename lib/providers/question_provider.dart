@@ -15,6 +15,8 @@ class Questions with ChangeNotifier {
 
   String? _selectedAnswer;
 
+  int _score = 0;
+
   Future<void> fetchQuestions() async {
     String apiKey = 'rRugdBWczdMjHKjQR0Z8DnqpjmXyn3Q8Vh6H47ja';
     final url = Uri.parse(
@@ -48,6 +50,10 @@ class Questions with ChangeNotifier {
     return _currentQuestionIndex;
   }
 
+  int get score {
+    return _score;
+  }
+
   void nextQuestion() {
     if (_currentQuestionIndex >= (_questions!.length - 1)) {
       isDone = true;
@@ -63,13 +69,26 @@ class Questions with ChangeNotifier {
 
   void setSelectedAnswer(String selectedAnswer) {
     _selectedAnswer = selectedAnswer;
-    // print(_selectedAnswer);
     notifyListeners();
+  }
+
+  String? correctAnswer() {
+    var answer = _questions![_currentQuestionIndex].correctAnswer.toString();
+
+    var answersList = _questions![_currentQuestionIndex].answers!.toJson();
+
+    print(answer);
+
+    print('the correct answer is: ' + answersList['$answer']);
+
+    return answersList['$answer'];
   }
 
   bool checkAnswer() {
     if (_selectedAnswer == _questions![_currentQuestionIndex].correctAnswer) {
       print('true');
+      _score += 10;
+      notifyListeners();
       return true;
     } else {
       print('false');
