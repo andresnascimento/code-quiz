@@ -18,6 +18,7 @@ const kColorOrangeDarker = Color.fromRGBO(159, 48, 5, 1);
 const kColorGold = Color.fromRGBO(250, 163, 48, 1);
 
 const kColorSuccess = Color.fromRGBO(3, 165, 78, 1);
+const kColorDanger = Color.fromRGBO(251, 23, 23, 1);
 
 // TYPOGRAPHY
 

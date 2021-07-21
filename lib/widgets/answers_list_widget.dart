@@ -4,6 +4,7 @@ import 'dart:math';
 
 import '../models/app_constants.dart';
 import '../providers/question_provider.dart';
+import '/widgets/wrong_answer_content_widget.dart';
 import 'correct_answer_content_widget.dart';
 
 class AnswersList extends StatelessWidget {
@@ -48,16 +49,17 @@ class AnswersList extends StatelessWidget {
                 ),
                 onTap: () {
                   questionsData.setSelectedAnswer(selectedAnswer);
-                  questionsData.checkAnswer();
 
                   var isLastQuestion = questionsData.currentQuestionIndex >=
                       (questionsData.questions!.length - 1);
                   var randomNumber = Random().nextInt(4);
+
+                  var isCorrectAnswer = questionsData.checkAnswer();
                   var correcAnswer = questionsData.correctAnswer();
 
                   showModalBottomSheet(
                     backgroundColor: Color.fromARGB(0, 255, 255, 255),
-                    // isDismissible: false,
+                    isDismissible: false,
                     context: context,
                     builder: (BuildContext ctx) {
                       return Container(
@@ -72,13 +74,20 @@ class AnswersList extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             Expanded(
-                              flex: 3,
+                              flex: 4,
                               child: Container(
-                                child: CorrectAnswerContent(
-                                  randomNumber: randomNumber,
-                                  questionsData: questionsData,
-                                  correcAnswer: correcAnswer,
-                                ),
+                                child: isCorrectAnswer
+                                    ? CorrectAnswerContent(
+                                        randomNumber: randomNumber,
+                                        questionsData: questionsData,
+                                        correcAnswer: correcAnswer,
+                                      )
+                                    : WrongAnswerContent(
+                                        randomNumber: randomNumber,
+                                        questionsData: questionsData,
+                                        correcAnswer: correcAnswer,
+                                        selectedAnswer: key,
+                                      ),
                               ),
                             ),
                             Expanded(
@@ -88,33 +97,49 @@ class AnswersList extends StatelessWidget {
                                     if (!isLastQuestion) {
                                       questionsData.nextQuestion();
                                     }
-
                                     Navigator.pop(context);
                                   },
-                                  child: Container(
-                                    color: isLastQuestion
-                                        ? kColorBlack
-                                        : kColorPrimary,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          isLastQuestion
-                                              ? 'Finish'
-                                              : 'Next question',
-                                          style: GoogleFonts.mulish(
-                                            textStyle: kTextBody,
+                                  child: isLastQuestion
+                                      ? Container(
+                                          color: kColorGold,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                'See score',
+                                                style: GoogleFonts.quicksand(
+                                                  textStyle: kHeaderSm,
+                                                ),
+                                              ),
+                                              // SizedBox(width: 10.0),
+                                              // Icon(
+                                              //   Icons.school,
+                                              //   color: Colors.white,
+                                              // )
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          color: kColorPrimary,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                'Next question',
+                                                style: GoogleFonts.mulish(
+                                                  textStyle: kTextBody,
+                                                ),
+                                              ),
+                                              SizedBox(width: 10.0),
+                                              Icon(
+                                                Icons.east,
+                                                color: Colors.white,
+                                              )
+                                            ],
                                           ),
                                         ),
-                                        SizedBox(width: 10.0),
-                                        Icon(
-                                          isLastQuestion ? null : Icons.east,
-                                          color: Colors.white,
-                                        )
-                                      ],
-                                    ),
-                                  ),
                                 ),
                               ),
                             )

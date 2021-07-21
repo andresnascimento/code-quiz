@@ -7,20 +7,41 @@ import '../models/question_model.dart';
 
 class Questions with ChangeNotifier {
   List<Question>? _questions;
+  List<Question>? get questions {
+    if (_questions != null) return [..._questions!];
+  }
+
   var isDone = false;
 
   String? _categorySelected;
+  String? get categorySelected {
+    return _categorySelected;
+  }
 
   int _currentQuestionIndex = 0;
+  int get currentQuestionIndex {
+    return _currentQuestionIndex;
+  }
 
   String? _selectedAnswer;
+  String? get selectedAnswer {
+    return _selectedAnswer;
+  }
 
   int _score = 0;
+  int get score {
+    return _score;
+  }
+
+  List<bool> _scoreKeeper = [];
+  List<bool> get scoreKeeper {
+    return _scoreKeeper;
+  }
 
   Future<void> fetchQuestions() async {
     String apiKey = 'rRugdBWczdMjHKjQR0Z8DnqpjmXyn3Q8Vh6H47ja';
     final url = Uri.parse(
-        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=2&tags=$_categorySelected');
+        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=10&tags=$_categorySelected');
 
     try {
       final response = await http.get(url);
@@ -28,7 +49,7 @@ class Questions with ChangeNotifier {
         _questions = quizFromJson(response.body);
         notifyListeners();
 
-        print(_questions![currentQuestionIndex].answers);
+        print(response.statusCode);
       } else {
         print(response.statusCode);
       }
@@ -36,22 +57,6 @@ class Questions with ChangeNotifier {
       throw error;
       //TODO add the error message on the screen
     }
-  }
-
-  List<Question>? get questions {
-    if (_questions != null) return [..._questions!];
-  }
-
-  String? get categorySelected {
-    return _categorySelected;
-  }
-
-  int get currentQuestionIndex {
-    return _currentQuestionIndex;
-  }
-
-  int get score {
-    return _score;
   }
 
   void nextQuestion() {
@@ -88,10 +93,13 @@ class Questions with ChangeNotifier {
     if (_selectedAnswer == _questions![_currentQuestionIndex].correctAnswer) {
       print('true');
       _score += 10;
+      _scoreKeeper.add(true);
       notifyListeners();
       return true;
     } else {
       print('false');
+      _scoreKeeper.add(false);
+      notifyListeners();
       return false;
     }
   }

@@ -12,6 +12,7 @@ class StatusBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final questionsListLength = questionsData.questions!.length;
+    final score = questionsData.score;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 32, horizontal: 20),
       child: Column(
@@ -43,7 +44,7 @@ class StatusBar extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      '93.4',
+                      '$score',
                       style: GoogleFonts.mulish(
                         textStyle:
                             kTextBody.copyWith(fontWeight: FontWeight.bold),
@@ -54,26 +55,49 @@ class StatusBar extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(width: 16),
-          Container(
-            padding: EdgeInsets.only(top: 20),
-            height: 24,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: questionsListLength,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Container(
-                  //TODO add the progress logic
-                  height: 4,
-                  margin: EdgeInsets.symmetric(horizontal: 4, vertical: 0),
-                  width: (MediaQuery.of(context).size.width - 40) /
-                      questionsListLength,
-                  color: Colors.white.withAlpha(32),
-                );
-              },
-            ),
-          )
+          Stack(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                height: 24,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: questionsListLength,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 4,
+                      margin: EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+                      width: (MediaQuery.of(context).size.width - 40) /
+                          questionsListLength,
+                      color: Colors.white.withAlpha(32),
+                    );
+                  },
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                height: 24,
+                child: ListView.builder(
+                  //TODO fix the listview to occupy only the available space
+                  scrollDirection: Axis.horizontal,
+                  itemCount: questionsData.scoreKeeper.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 4,
+                      margin: EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+                      width: (MediaQuery.of(context).size.width - 40) /
+                          questionsListLength,
+                      color: questionsData.scoreKeeper[index] == true
+                          ? kColorSuccess
+                          : kColorDanger,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
