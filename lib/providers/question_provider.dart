@@ -6,57 +6,36 @@ import '../models/question_model.dart';
 //TODO add check anwser logic
 
 class Questions with ChangeNotifier {
-  List<Question> _questions;
-
-  String _categorySelected;
-  int _currentQuestionIndex = 0;
-
-  String _selectedAnswer;
-
-  List<Question> get questions {
-    return [..._questions];
+  List<Question>? _questions;
+  List<Question>? get questions {
+    if (_questions != null) return [..._questions!];
   }
 
-  String get categorySelected {
+  var isDone = false;
+
+  String? _categorySelected;
+  String? get categorySelected {
     return _categorySelected;
   }
 
+  int _currentQuestionIndex = 0;
   int get currentQuestionIndex {
     return _currentQuestionIndex;
   }
 
-  void nextQuestion() {
-    if (_currentQuestionIndex >= (_questions.length - 1)) {
-      isDone = true;
-      notifyListeners();
-      print('finished');
-    } else {
-      _currentQuestionIndex++;
-      notifyListeners();
-    }
-    print(_questions[_currentQuestionIndex].correctAnswer);
-    print(_questions[_currentQuestionIndex].multipleCorrectAnswers);
+  String? _selectedAnswer;
+  String? get selectedAnswer {
+    return _selectedAnswer;
   }
 
-  void setSelectedAnswer(String selectedAnswer) {
-    _selectedAnswer = selectedAnswer;
-    print(_selectedAnswer);
-    notifyListeners();
+  int _score = 0;
+  int get score {
+    return _score;
   }
 
-  bool checkAnswer() {
-    if (_selectedAnswer == _questions[_currentQuestionIndex].correctAnswer) {
-      print('true');
-      return true;
-    } else {
-      print('false');
-      return false;
-    }
-  }
-
-  void selectCategory(String category) {
-    _categorySelected = category;
-    notifyListeners();
+  List<bool> _scoreKeeper = [];
+  List<bool> get scoreKeeper {
+    return _scoreKeeper;
   }
 
   Future<void> fetchQuestions() async {
@@ -70,7 +49,7 @@ class Questions with ChangeNotifier {
         _questions = quizFromJson(response.body);
         notifyListeners();
 
-        print(_questions[currentQuestionIndex].answers.toJson());
+        print(response.statusCode);
       } else {
         print(response.statusCode);
       }
@@ -78,5 +57,55 @@ class Questions with ChangeNotifier {
       throw error;
       //TODO add the error message on the screen
     }
+  }
+
+  void nextQuestion() {
+    if (_currentQuestionIndex >= (_questions!.length - 1)) {
+      isDone = true;
+      notifyListeners();
+      print('finished');
+    } else {
+      _currentQuestionIndex++;
+      notifyListeners();
+    }
+    print(_questions![_currentQuestionIndex].correctAnswer);
+    print(_questions![_currentQuestionIndex].multipleCorrectAnswers);
+  }
+
+  void setSelectedAnswer(String selectedAnswer) {
+    _selectedAnswer = selectedAnswer;
+    notifyListeners();
+  }
+
+  String? correctAnswer() {
+    var answer = _questions![_currentQuestionIndex].correctAnswer.toString();
+
+    var answersList = _questions![_currentQuestionIndex].answers!.toJson();
+
+    print(answer);
+
+    print('the correct answer is: ' + answersList['$answer']);
+
+    return answersList['$answer'];
+  }
+
+  bool checkAnswer() {
+    if (_selectedAnswer == _questions![_currentQuestionIndex].correctAnswer) {
+      print('true');
+      _score += 10;
+      _scoreKeeper.add(true);
+      notifyListeners();
+      return true;
+    } else {
+      print('false');
+      _scoreKeeper.add(false);
+      notifyListeners();
+      return false;
+    }
+  }
+
+  void selectCategory(String category) {
+    _categorySelected = category;
+    notifyListeners();
   }
 }
