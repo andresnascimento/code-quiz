@@ -41,7 +41,7 @@ class Questions with ChangeNotifier {
   Future<void> fetchQuestions() async {
     String apiKey = 'rRugdBWczdMjHKjQR0Z8DnqpjmXyn3Q8Vh6H47ja';
     final url = Uri.parse(
-        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=10&tags=$_categorySelected');
+        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=2&tags=$_categorySelected');
 
     try {
       final response = await http.get(url);

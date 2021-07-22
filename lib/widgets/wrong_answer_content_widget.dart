@@ -18,12 +18,12 @@ class WrongAnswerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         Container(
           height: 120.0,
           width: 250.0,
-          margin: EdgeInsets.only(bottom: 24.0),
+          margin: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
           decoration: BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.cover,

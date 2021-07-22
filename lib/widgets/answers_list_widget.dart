@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
-import '../models/app_constants.dart';
-import '../providers/question_provider.dart';
+import '/models/app_constants.dart';
+import '/providers/question_provider.dart';
+import '/screens/score_screen.dart';
 import '/widgets/wrong_answer_content_widget.dart';
 import 'correct_answer_content_widget.dart';
 
@@ -91,16 +92,14 @@ class AnswersList extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: Container(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (!isLastQuestion) {
-                                      questionsData.nextQuestion();
-                                    }
-                                    Navigator.pop(context);
-                                  },
-                                  child: isLastQuestion
-                                      ? Container(
+                              child: isLastQuestion
+                                  ? Container(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .pushNamed(ScoreScreen.id);
+                                        },
+                                        child: Container(
                                           color: kColorGold,
                                           child: Row(
                                             mainAxisAlignment:
@@ -112,15 +111,18 @@ class AnswersList extends StatelessWidget {
                                                   textStyle: kHeaderSm,
                                                 ),
                                               ),
-                                              // SizedBox(width: 10.0),
-                                              // Icon(
-                                              //   Icons.school,
-                                              //   color: Colors.white,
-                                              // )
                                             ],
                                           ),
-                                        )
-                                      : Container(
+                                        ),
+                                      ),
+                                    )
+                                  : Container(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          questionsData.nextQuestion();
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
                                           color: kColorPrimary,
                                           child: Row(
                                             mainAxisAlignment:
@@ -140,9 +142,10 @@ class AnswersList extends StatelessWidget {
                                             ],
                                           ),
                                         ),
-                                ),
-                              ),
-                            )
+                                      ),
+                                    ),
+                            ),
+                            //
                           ],
                         ),
                       );

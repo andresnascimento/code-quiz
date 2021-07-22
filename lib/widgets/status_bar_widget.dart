@@ -68,7 +68,8 @@ class StatusBar extends StatelessWidget {
                     return Container(
                       height: 4,
                       margin: EdgeInsets.symmetric(horizontal: 4, vertical: 0),
-                      width: (MediaQuery.of(context).size.width - 40) /
+                      width: (MediaQuery.of(context).size.width -
+                              12 * questionsListLength) /
                           questionsListLength,
                       color: Colors.white.withAlpha(32),
                     );
@@ -87,7 +88,8 @@ class StatusBar extends StatelessWidget {
                     return Container(
                       height: 4,
                       margin: EdgeInsets.symmetric(horizontal: 4, vertical: 0),
-                      width: (MediaQuery.of(context).size.width - 40) /
+                      width: (MediaQuery.of(context).size.width -
+                              12 * questionsListLength) /
                           questionsListLength,
                       color: questionsData.scoreKeeper[index] == true
                           ? kColorSuccess

@@ -3,20 +3,6 @@ import 'app_constants.dart';
 import 'package:flutter/material.dart';
 
 class Category {
-  // List _categoriesList = [
-  //   // 'BASH',
-  //   // 'DevOps',
-  //   // 'Docker',
-  //   'HTML',
-  //   // 'JavaScript',
-  //   // 'Kubernets',
-  //   // 'Laravel',
-  //   // 'Linux',
-  //   // 'MySQL',
-  //   // 'PHP',
-  //   // 'WordPress'
-  // ];
-
   List<CategoryCard> _categoryList = [
     CategoryCard(
       categoryColor: kColorOrange,
