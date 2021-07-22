@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './providers/question_provider.dart';
+import 'screens/score_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/quiz_screen.dart';
 
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         initialRoute: HomePage.id,
         routes: {
           HomePage.id: (context) => HomePage(),
-          QuizScreen.id: (context) => QuizScreen()
+          QuizScreen.id: (context) => QuizScreen(),
+          ScoreScreen.id: (context) => ScoreScreen(),
         },
       ),
     );

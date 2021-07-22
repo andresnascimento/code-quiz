@@ -26,18 +26,18 @@ class Question {
     this.difficulty,
   });
 
-  int id;
-  String question;
+  int? id;
+  String? question;
   dynamic description;
-  Answers answers;
-  String multipleCorrectAnswers;
-  CorrectAnswers correctAnswers;
-  String correctAnswer;
+  Answers? answers;
+  String? multipleCorrectAnswers;
+  CorrectAnswers? correctAnswers;
+  String? correctAnswer;
   dynamic explanation;
   dynamic tip;
-  List<Tag> tags;
-  Category category;
-  Difficulty difficulty;
+  List<Tag>? tags;
+  Category? category;
+  Difficulty? difficulty;
 
   factory Question.fromJson(Map<String, dynamic> json) => Question(
         id: json["id"],
@@ -59,15 +59,15 @@ class Question {
         "id": id,
         "question": question,
         "description": description,
-        "answers": answers.toJson(),
+        "answers": answers!.toJson(),
         "multiple_correct_answers": multipleCorrectAnswers,
-        "correct_answers": correctAnswers.toJson(),
+        "correct_answers": correctAnswers!.toJson(),
         "correct_answer": correctAnswer == null ? null : correctAnswer,
         "explanation": explanation,
         "tip": tip,
-        "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
-        "category": categoryValues.reverse[category],
-        "difficulty": difficultyValues.reverse[difficulty],
+        "tags": List<dynamic>.from(tags!.map((x) => x.toJson())),
+        "category": categoryValues.reverse![category],
+        "difficulty": difficultyValues.reverse![difficulty],
       };
 }
 
@@ -81,12 +81,12 @@ class Answers {
     this.answerF,
   });
 
-  String answerA;
-  String answerB;
-  String answerC;
-  String answerD;
-  String answerE;
-  String answerF;
+  String? answerA;
+  String? answerB;
+  String? answerC;
+  String? answerD;
+  String? answerE;
+  String? answerF;
 
   factory Answers.fromJson(Map<String, dynamic> json) => Answers(
         answerA: json["answer_a"],
@@ -125,12 +125,12 @@ class CorrectAnswers {
     this.answerFCorrect,
   });
 
-  String answerACorrect;
-  String answerBCorrect;
-  String answerCCorrect;
-  String answerDCorrect;
-  String answerECorrect;
-  String answerFCorrect;
+  String? answerACorrect;
+  String? answerBCorrect;
+  String? answerCCorrect;
+  String? answerDCorrect;
+  String? answerECorrect;
+  String? answerFCorrect;
 
   factory CorrectAnswers.fromJson(Map<String, dynamic> json) => CorrectAnswers(
         answerACorrect: json["answer_a_correct"],
@@ -160,24 +160,24 @@ class Tag {
     this.name,
   });
 
-  Category name;
+  Category? name;
 
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
         name: categoryValues.map[json["name"]],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": categoryValues.reverse[name],
+        "name": categoryValues.reverse![name],
       };
 }
 
 class EnumValues<T> {
   Map<String, T> map;
-  Map<T, String> reverseMap;
+  Map<T, String>? reverseMap;
 
   EnumValues(this.map);
 
-  Map<T, String> get reverse {
+  Map<T, String>? get reverse {
     if (reverseMap == null) {
       reverseMap = map.map((k, v) => new MapEntry(v, k));
     }
