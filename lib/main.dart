@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import './providers/question_provider.dart';
@@ -21,7 +22,11 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        // home: HomePage(),
+        theme: ThemeData(
+          textTheme: GoogleFonts.mulishTextTheme(
+            Theme.of(context).textTheme,
+          ),
+        ),
         initialRoute: HomePage.id,
         routes: {
           HomePage.id: (context) => HomePage(),

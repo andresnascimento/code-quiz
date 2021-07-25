@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kColorBlack = Color.fromRGBO(10, 17, 40, 1);
+const kColorBlack = Color.fromRGBO(14, 18, 48, 1);
 const kColorGray500 = Color.fromRGBO(24, 31, 83, 1);
 const kColorPrimary = Color.fromRGBO(23, 102, 255, 1);
 const kColorPrimaryDark = Color.fromRGBO(15, 89, 231, 1);
@@ -17,7 +17,7 @@ const kColorOrangeDarker = Color.fromRGBO(159, 48, 5, 1);
 
 const kColorGold = Color.fromRGBO(250, 163, 48, 1);
 
-const kColorSuccess = Color.fromRGBO(3, 165, 78, 1);
+const kColorSuccess = Color.fromRGBO(23, 251, 128, 1);
 const kColorDanger = Color.fromRGBO(251, 23, 23, 1);
 
 // TYPOGRAPHY

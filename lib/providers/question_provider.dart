@@ -11,6 +11,11 @@ class Questions with ChangeNotifier {
     if (_questions != null) return [..._questions!];
   }
 
+  var _numbOfQuestions = 2;
+  int get numbOfQuestions {
+    return _numbOfQuestions;
+  }
+
   var isDone = false;
 
   String? _categorySelected;
@@ -41,7 +46,7 @@ class Questions with ChangeNotifier {
   Future<void> fetchQuestions() async {
     String apiKey = 'rRugdBWczdMjHKjQR0Z8DnqpjmXyn3Q8Vh6H47ja';
     final url = Uri.parse(
-        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=2&tags=$_categorySelected');
+        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=$_numbOfQuestions&tags=$_categorySelected');
 
     try {
       final response = await http.get(url);
@@ -106,6 +111,13 @@ class Questions with ChangeNotifier {
 
   void selectCategory(String category) {
     _categorySelected = category;
+    notifyListeners();
+  }
+
+  void resetQuiz() {
+    _scoreKeeper = [];
+    _score = 0;
+    _currentQuestionIndex = 0;
     notifyListeners();
   }
 }
