@@ -1,9 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/question_model.dart';
-
-//TODO add check anwser logic
 
 class Questions with ChangeNotifier {
   List<Question>? _questions;
@@ -119,5 +119,25 @@ class Questions with ChangeNotifier {
     _score = 0;
     _currentQuestionIndex = 0;
     notifyListeners();
+  }
+
+  Future<void> saveCatgoryScore() async {
+    final url = Uri.parse(
+        'https://conding-quiz-default-rtdb.firebaseio.com/categories.json');
+
+    try {
+      final response = await http.post(url,
+          body: jsonEncode({
+            'category': _categorySelected,
+            'score': _score,
+            'date': DateTime.now().toString(),
+          }));
+
+      //TODO add a new category object within a category provider
+      print(response.body);
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 }

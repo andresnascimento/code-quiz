@@ -107,7 +107,9 @@ class ScoreScreen extends StatelessWidget {
                 SizedBox(width: 20.0),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      questionsData.saveCatgoryScore();
+                    },
                     child: Text('Continue',
                         style: kTextBodySm.copyWith(color: kColorBlack)),
                     style: ElevatedButton.styleFrom(
