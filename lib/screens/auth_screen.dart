@@ -45,12 +45,50 @@ class Login extends StatelessWidget {
 }
 
 class Signup extends StatelessWidget {
-  const Signup({Key? key}) : super(key: key);
+  final _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('SIGNUP'),
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(labelText: 'E-mail'),
+              validator: (value) {
+                if (value!.isEmpty || !value.contains('@')) {
+                  return 'Invalid email!';
+                }
+                return null;
+              },
+              onSaved: (value) {},
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+              controller: _passwordController,
+              validator: (value) {
+                if (value!.isEmpty || value.length < 5) {
+                  return 'Password is too short!';
+                }
+              },
+              onSaved: (value) {},
+            ),
+            SizedBox(height: 20),
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text('SIGNUP'),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

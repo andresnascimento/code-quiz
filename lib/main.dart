@@ -1,4 +1,4 @@
-import 'package:coding_quiz/screens/login_signup_screen.dart';
+import 'package:coding_quiz/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
