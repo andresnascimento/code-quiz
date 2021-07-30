@@ -1,14 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/question_model.dart';
 
-//TODO add check anwser logic
-
 class Questions with ChangeNotifier {
   List<Question>? _questions;
   List<Question>? get questions {
     if (_questions != null) return [..._questions!];
+  }
+
+  var _numbOfQuestions = 2;
+  int get numbOfQuestions {
+    return _numbOfQuestions;
   }
 
   var isDone = false;
@@ -41,7 +46,7 @@ class Questions with ChangeNotifier {
   Future<void> fetchQuestions() async {
     String apiKey = 'rRugdBWczdMjHKjQR0Z8DnqpjmXyn3Q8Vh6H47ja';
     final url = Uri.parse(
-        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=2&tags=$_categorySelected');
+        'https://quizapi.io/api/v1/questions?apiKey=$apiKey&limit=$_numbOfQuestions&tags=$_categorySelected');
 
     try {
       final response = await http.get(url);
@@ -107,5 +112,32 @@ class Questions with ChangeNotifier {
   void selectCategory(String category) {
     _categorySelected = category;
     notifyListeners();
+  }
+
+  void resetQuiz() {
+    _scoreKeeper = [];
+    _score = 0;
+    _currentQuestionIndex = 0;
+    notifyListeners();
+  }
+
+  Future<void> saveCatgoryScore() async {
+    final url = Uri.parse(
+        'https://conding-quiz-default-rtdb.firebaseio.com/categories.json');
+
+    try {
+      final response = await http.post(url,
+          body: jsonEncode({
+            'category': _categorySelected,
+            'score': _score,
+            'date': DateTime.now().toString(),
+          }));
+
+      //TODO add a new category object within a category provider
+      print(response.body);
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 }

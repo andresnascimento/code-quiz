@@ -15,6 +15,7 @@ class CategoryCard extends StatelessWidget {
   final String categoryName;
   final Color fontColor;
   final String imageName;
+  int? score = 0;
 
   CategoryCard({
     required this.categoryColor,
@@ -24,6 +25,7 @@ class CategoryCard extends StatelessWidget {
     required this.categoryName,
     this.fontColor = Colors.white,
     required this.imageName,
+    this.score = 0,
   });
 
   @override
@@ -136,7 +138,7 @@ class CategoryCard extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Text(
-                          '0.0',
+                          '${score.toString()}',
                           style: GoogleFonts.quicksand(textStyle: kHeaderLg)
                               .copyWith(color: fontColor),
                         ),
