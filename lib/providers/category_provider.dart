@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,6 +7,25 @@ import '../widgets/category_list_widget.dart';
 import '../models/app_constants.dart';
 
 class Category with ChangeNotifier {
+  List<CategoryModel>? _categoryModel = [
+    CategoryModel(
+      categoryName: 'HTML',
+      score: 20,
+    ),
+  ];
+
+  List<CategoryModel>? get categoryModel {
+    return _categoryModel;
+  }
+
+  bool played(String categoryName) {
+    if (_categoryModel!.contains(categoryName)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   List<CategoryCard> _categoryCardList = [
     CategoryCard(
       categoryColor: kColorOrange,
@@ -37,16 +58,27 @@ class Category with ChangeNotifier {
   // void firstUpdate() async {}
 }
 
-// class CategoryModel {
-//   CategoryModel({
-//     this.id,
-//     @required this.categoryName,
-//     this.score = 0,
-//     this.lastPlayed,
-//   });
+String quizToJson(List<CategoryModel> data) {
+  return json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+}
 
-//   String? id = DateTime.now().toString();
-//   String? categoryName;
-//   int? score;
-//   String? lastPlayed;
-// }
+class CategoryModel {
+  CategoryModel({
+    this.id = '1',
+    @required this.categoryName,
+    this.score = 0,
+    this.lastPlayed = 'today',
+  });
+
+  String? id = DateTime.now().toString();
+  String? categoryName;
+  int? score;
+  String? lastPlayed;
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "categoryName": categoryName,
+        "score": score,
+        "lastPlayed": lastPlayed
+      };
+}
